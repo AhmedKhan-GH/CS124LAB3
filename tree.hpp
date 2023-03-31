@@ -5,6 +5,6 @@ class Tree
 {
 public:
 private:
-}
+};
 
 #endif //TREE_HPP

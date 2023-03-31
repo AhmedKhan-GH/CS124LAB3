@@ -55,25 +55,41 @@ bool Runtime::boolean_question()
 }
 
 
-Runtime::Runtime() : mainloop_state(false);
+Runtime::Runtime() : mainloop_state(false)
 {
 
 }
 
-
-void Runtime::start()
+void Runtime::start_prompt()
 {
-
 	std::cout <<
 	std::endl << "Greeting user, welcome to the Enigma Machine." <<
 	std::endl << "This program allows you to provide a cypher" <<
 	std::endl << "and provide plain-text files for encryption" <<
 	std::endl << "or an encrypted file for decryption." <<
-	std::endl; 
+	std::endl;
+}
+
+void Runtime::start()
+{
+
+	start_prompt();
+	std::cout <<
+	std::endl << "Would you like to proceed[y] or exit[n]." <<
+	std::endl;
+	mainloop_state = boolean_question();	
+	
 	while(mainloop_state)
 	{
-		
+		std::cout <<
+		std::endl << "You have reached the end of the program." <<
+		std::endl << 
+		std::endl << "Would you like to restart[y] or exit[n]" <<
+		std::endl;
+		mainloop_state = boolean_question();
 	}
-
+	std::cout << 
+	std::endl << "Thank you for using the Enigma Machine!" <<
+	std::endl;
 }
 
