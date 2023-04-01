@@ -2,30 +2,23 @@
 #include <utility>
 #include <stdexcept>
 
+hashmap::hashmap() : table_size(32), multiplier(31), nullchar('\0');
+
 // hash function
-int hash(std::string cipher) {
-    int result = 0;
-    int multiplier = 1;
-    for (char c : cipher) {
-        if (c == '1') { result += multiplier; }
-
-        // error handling
-        else if (c != '0') {
-            throw std::invalid_argument("Cipher includes chars other than 1 or 0");
-        }
-
-        // double the value of the next digit
-        multiplier *= 2;
+int hashmap::hash(std::string cipher) const
+{
+   	int hashed_value = 0;
+    for (char c : cipher)
+    {
+        hash_value = hash_value * multiplier + (int)c;
     }
 
-    // fit to hash size
-    result %= HASH_SIZE;
-    return result;
+    return hashed_value;
 }
 
 // adds a new element to the hash map
 void hashmap::insert(std::pair<char, std::string> data) {
-    int index = hash(data.second);
+    int index = hash(data.second) % table_size;
     hash_node* new_node = new Hash_node;
     new_node->data = data;
     new_node->next = table[index];
@@ -34,12 +27,16 @@ void hashmap::insert(std::pair<char, std::string> data) {
 
 // finds the char that is represented by a given code
 char hashmap::find(std::string cipher) const {
-    int index = hash(cipher);
+    int index = hash(cipher) % table_size;
     hash_node* current = table[index];
-    while (current != nullptr) {
-        if (current->data.second == cipher) { return current->data.first; }
+    while (current != nullptr) 
+    {
+        if (current->data.second == cipher) 
+        { 
+            return current->data.first; 
+        }
         current = current->next;
     }
 
-    return NOT_FOUND; // failed to find char
+    return nullchar; // failed to find char
 }
