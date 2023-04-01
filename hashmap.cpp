@@ -1,6 +1,7 @@
 #include "hashmap.hpp"
 #include <utility>
 #include <stdexcept>
+#include <string>
 
 // hash function
 int hash(std::string cipher) {
@@ -26,7 +27,7 @@ int hash(std::string cipher) {
 // adds a new element to the hash map
 void hashmap::insert(std::pair<char, std::string> data) {
     int index = hash(data.second);
-    hash_node* new_node = new Hash_node;
+    hash_node* new_node = new hash_node;
     new_node->data = data;
     new_node->next = table[index];
     table[index] = new_node;

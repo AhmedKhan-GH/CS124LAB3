@@ -4,10 +4,12 @@
 #include <string>
 
 const int HASH_SIZE = 32; // size of hashmap
-const char NOT_FOUND = '\0'
+const char NOT_FOUND = '\0';
+
+int hash(std::string cipher); // hash function
 
 // Node for sheparate chaining
-struct ash_node {
+struct hash_node {
     std::pair<char, std::string> data; // code is represented as a string of 1s and 0s
     hash_node* next = nullptr;
 };
@@ -20,7 +22,6 @@ public:
 
 private:
     hash_node* table[HASH_SIZE];
-    int hash(std::string cipher); // hash function
 };
 
 #endif //HASHMAP_HPP
