@@ -7,7 +7,7 @@ hashmap::hashmap() : table_size(32), multiplier(31), nullchar('\0');
 // hash function
 int hashmap::hash(std::string cipher) const
 {
-   	int hashed_value = 0;
+	int hashed_value = 0;
     for (char c : cipher)
     {
         hash_value = hash_value * multiplier + (int)c;
