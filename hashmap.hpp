@@ -32,7 +32,7 @@ private:
     const int table_size;
     const char nullchar;
     const int multiplier;
-    hash_node* table[HASH_SIZE];
+    hash_node* table[table_size];
 };
 
 #endif //HASHMAP_HPP
