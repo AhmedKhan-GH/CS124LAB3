@@ -2,6 +2,20 @@
 #include <utility>
 #include <stdexcept>
 #include <iostream>
+#include <functional>
+
+hashmap::~hashmap() {
+    for (int i = 0; i < current_array_size; i++) {
+        hash_node* current = table[i];
+        while (current != nullptr) {
+            hash_node* next = current->next;
+            delete current;
+            current = next;
+        }
+    }
+    delete[] table;
+}
+
 
 hashmap::hashmap() : 
 	current_array_size(4), //initial array size, array size track
@@ -15,30 +29,39 @@ hashmap::hashmap() :
 {
 	table = new hash_node*[current_array_size]; 
 	//dynamically allocate array of hash node pointers
-}
-
-void hashmap::print() const
-
-{
-	std::cout << std::endl;
 	for(int i = 0; i < current_array_size; i++)
 	{
-		if(table[i] != nullptr)
-		{
-			std::cout << table[i]->data.first << " - " << table[i]->data.second << std::endl;
-		}
+		table[i] = nullptr;
 	}
 }
 
-// hash function
-int hashmap::hash(std::string raw_value) const
+
+void hashmap::print() const {
+    std::cout << std::endl;
+    for (int i = 0; i < current_array_size; i++) {
+        std::cout << "Bucket " << i << ": ";
+        hash_node* current = table[i];
+        while (current != nullptr) {
+            std::cout << "(" << current->data.first << " - " << current->data.second << ") ";
+            current = current->next;
+        }
+        std::cout << std::endl;
+    }
+}
+
+
+int hashmap::hasher(const std::string input) const 
 {
-	int hashed_value = 0;
-	for (char c : raw_value)
-	{
-		hashed_value = hashed_value * multiplier + (int)c;
-	}
-	return hashed_value;
+	int hash = 0;
+   int weight = 1;
+
+    for (char c : input) {
+        if (c == '1') {
+            hash += weight;
+        }
+        weight *= 2;
+    }
+    return hash;
 }
 
 
@@ -71,8 +94,16 @@ void hashmap::resize_if_necessary()
 	}
 	if(need_to_resize)
 	{
-		//dynamically allocate new hash table
+	
+	std::cout << "Map has doubled in size to " << new_array_size;		
+	
+	//dynamically allocate new hash table
 		new_table = new hash_node*[new_array_size];
+		for(int i = 0; i < new_array_size; i++)
+		{
+			new_table[i] = 0;
+		}
+
 
 		for (int i = 0; i < current_array_size; i++) 
 		{
@@ -88,16 +119,21 @@ void hashmap::resize_if_necessary()
 
 				// Compute the new index
 				int new_index = 
-				hash(node->data.second) % new_array_size;
+			hasher(node->data.second) % new_array_size;
 
-				// Insert the element into new bucket
-				// by pushing current element at index
-				// down the linked list
-				node->next = new_table[new_index];
-				
-				//setting the head node to new node
+					
+			    // Insert the element into new bucket
+			    // by pushing current element at index
+			    // down the linked list
+			    if (new_table[new_index] == nullptr) {
+				// set head of new linked list
 				new_table[new_index] = node;
-
+				node->next = nullptr;
+			    } else {
+				// append to existing linked list
+				node->next = new_table[new_index];
+				new_table[new_index] = node;
+			    }
 				//move to next node in old bucket
 				//until nullptr is reached and
 				//while loop terminates
@@ -142,7 +178,7 @@ void hashmap::insert(std::pair<char, std::string> data)
 {
 	resize_if_necessary();
 
-	int new_index = hash(data.second) % this->current_array_size;
+	int new_index = hasher(data.second) % current_array_size;
 
 	hash_node* new_node = new hash_node;
     	new_node->data = data;
@@ -164,7 +200,7 @@ void hashmap::insert(std::pair<char, std::string> data)
 
 // finds the char that is represented by a given code
 char hashmap::find(std::string cipher) const {
-    int index = hash(cipher) % current_array_size;
+    int index = hasher(cipher) % current_array_size;
     hash_node* current = table[index];
     while (current != nullptr) 
     {

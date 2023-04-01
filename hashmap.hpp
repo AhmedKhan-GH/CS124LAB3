@@ -8,7 +8,7 @@ class hashmap
 {
 public:
 
-
+	~hashmap();
     hashmap();
     //constructor to set consts
 
@@ -18,7 +18,7 @@ public:
     char find(std::string cipher) const;
     // finds the char that is represented by a given code
 
-    int hash(const std::string raw_value) const;
+    int hasher(const std::string raw_value) const;
 	void resize_if_necessary();
     int bucket_count() const;
     int element_count() const;
