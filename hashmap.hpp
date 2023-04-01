@@ -3,9 +3,6 @@
 #include <utility>
 #include <string>
 
-const int HASH_SIZE = 32; // size of hashmap
-const char NOT_FOUND = '\0';
-
 int hash(std::string cipher); // hash function
 
 // Node for sheparate chaining
@@ -17,10 +14,30 @@ struct hash_node {
 class hashmap
 {
 public:
-    void insert(std::pair<char, std::string> data); // adds a new element to the hash map
-    char find(std::string cipher) const; // finds the char that is represented by a given code
+
+    // Node for sheparate chaining
+    struct hash_node
+    {
+        std::pair<char, std::string> data;
+        //pair of char, and cypher string key-value pairs
+        hash_node* next = nullptr;
+        //hash node is a linked list element
+    };
+
+    hashmap();
+    //constructor to set consts
+
+    void insert(std::pair<char, std::string> data);
+    // adds a new element to the hash map
+
+    char find(std::string cipher) const;
+    // finds the char that is represented by a given code
+
+    int hash(const std::string cipher) const;
 
 private:
+    const int TABLE_SIZE = 32; // size of hashmap
+    const char NULLCHAR = '\0';
     hash_node* table[HASH_SIZE];
 };
 
