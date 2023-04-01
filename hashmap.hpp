@@ -3,13 +3,6 @@
 #include <utility>
 #include <string>
 
-int hash(std::string cipher); // hash function
-
-// Node for sheparate chaining
-struct hash_node {
-    std::pair<char, std::string> data; // code is represented as a string of 1s and 0s
-    hash_node* next = nullptr;
-};
 
 class hashmap
 {
@@ -36,8 +29,9 @@ public:
     int hash(const std::string cipher) const;
 
 private:
-    const int TABLE_SIZE = 32; // size of hashmap
-    const char NULLCHAR = '\0';
+    const int table_size;
+    const char nullchar;
+    const int multiplier;
     hash_node* table[HASH_SIZE];
 };
 
