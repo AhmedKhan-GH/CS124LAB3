@@ -60,7 +60,7 @@ Runtime::Runtime() : mainloop_state(false)
 
 }
 
-void Runtime::start_prompt()
+void Runtime::start_message()
 {
 	std::cout <<
 	std::endl << "Greeting user, welcome to the Enigma Machine." <<
@@ -70,26 +70,42 @@ void Runtime::start_prompt()
 	std::endl;
 }
 
-void Runtime::start()
+void Runtime::proceed_prompt()
 {
 
-	start_prompt();
 	std::cout <<
 	std::endl << "Would you like to proceed[y] or exit[n]." <<
 	std::endl;
+}
+
+void Runtime::restart_prompt()
+{
+	std::cout <<
+	std::endl << "You have reached the end of the program." <<
+	std::endl << 
+	std::endl << "Would you like to restart[y] or exit[n]" <<
+	std::endl;
+}
+
+void Runtime::end_message()
+{
+	std::cout << 
+	std::endl << "Thank you for using the Enigma Machine!" <<
+	std::endl;
+}
+
+void Runtime::start()
+
+{
+	start_message();
+	proceed_prompt();
 	mainloop_state = boolean_question();	
 	
 	while(mainloop_state)
 	{
-		std::cout <<
-		std::endl << "You have reached the end of the program." <<
-		std::endl << 
-		std::endl << "Would you like to restart[y] or exit[n]" <<
-		std::endl;
+		restart_prompt();
 		mainloop_state = boolean_question();
 	}
-	std::cout << 
-	std::endl << "Thank you for using the Enigma Machine!" <<
-	std::endl;
+	end_message();
 }
 
