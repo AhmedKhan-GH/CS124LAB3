@@ -4,6 +4,7 @@
 #include <string>
 
 const int HASH_SIZE = 32; // size of hashmap
+const char NOT_FOUND = '\0'
 
 // Node for sheparate chaining
 struct ash_node {

@@ -41,5 +41,5 @@ char hashmap::find(std::string cipher) const {
         current = current->next;
     }
 
-    return ' '; // failed to find char
+    return NOT_FOUND; // failed to find char
 }
