@@ -18,7 +18,6 @@ std::string runtime::file_input()
 		if(parser::does_this_file_exist(file_name))
 		{
 			verified = true;
-			std::cout << "file exists";
 		}
 		else
 		{
@@ -176,9 +175,16 @@ void runtime::start()
 */
 		parser cypher_file(cypher_file_name);
 		std::vector<std::pair<char, std::string>> cypher_pairs = cypher_file.parse_cypher();
+		
+		for(auto element : cypher_pairs)
+		{
+			std::cout << element.first << 
+			" - " <<  element.second << std::endl;
 
+		}	
+	       	
 		hashmap map(cypher_pairs);
-	       	map.print();	
+		map.print();	
 
 		restart_prompt();
 		mainloop_state = boolean_question();
