@@ -31,7 +31,7 @@ Tree::~Tree() {
 
 }
 
-void RedBlackTree::insert(string element)
+void RedBlackTree::insert(std::pair<char, std::string> element)
 {
    Node* new_node = new Node;
    new_node->data = element;
@@ -134,7 +134,7 @@ void RedBlackTree::fix_double_red(Node* child)
    }
 }
 
-void RedBlackTree::erase(string element)
+void RedBlackTree::erase(std::pair<char, std::string> element)
 {
    // Find node to be removed
 
