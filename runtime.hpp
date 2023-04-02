@@ -2,6 +2,7 @@
 #define RUNTIME_HPP
 #include <iostream>
 #include "parser.hpp"
+#include "hashmap.hpp"
 class runtime
 {
 public:
