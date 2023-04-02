@@ -1,15 +1,14 @@
 #include "runtime.hpp"
 
 
-runtime::runtime() : mainloop_state(false), cypher_present_state(false), data_present_state(false)
-{
-
-}
+runtime::runtime() : 
+	mainloop_state(false),
+	cipher_present_state(false),
+	data_present_state(false){}
 
 std::string runtime::file_input()
 {
-	std::cout <<
-	std::endl << "Enter file name: ";
+	std::cout << "ENTER: ";
 	std::string file_name;
 	bool verified = false;
 	do 
@@ -52,7 +51,8 @@ std::string runtime::string_input()
 }
 
 //COMPLETE
-//this function uses string_input to return a bool based on user input
+//this function uses string_input to return a bool based 
+//on user input
 bool runtime::boolean_question()
 {
 	bool verified = false; //determines if question 
@@ -95,18 +95,18 @@ bool runtime::boolean_question()
 std::string runtime::file_question(std::string type)
 {
 	std::cout <<
-	std::endl << "Please provide a " << type << " file" <<
-	std::endl << "(with .txt extension), and ensure it" <<
-	std::endl << "meets formatting requirements.";
+	std::endl << "Please provide a '" << type << "' file with the .txt" << 
+	std::endl << "extension, and ensure its the appropriate format." <<
+	std::endl;
 	return file_input();
 }
 
 bool runtime::file_reprompt(std::string type)
 {
 	std::cout <<
-	std::endl << "Would you like to select a different" <<
-	std::endl << type << " file[y]  or continue using the" <<
-	std::endl << "previous one[n]?";
+	std::endl << "Would you like to select a different[y] '" << type << "'" << 
+	std::endl << "file or continue using the current[n] one?" <<
+	std::endl;
 	return boolean_question();
 }
 
@@ -114,7 +114,7 @@ void runtime::start_message()
 {
 	std::cout <<
 	std::endl << "Greeting user, welcome to the Enigma Machine." <<
-	std::endl << "This program allows you to provide a cypher" <<
+	std::endl << "This program allows you to provide a cipher" <<
 	std::endl << "and provide plain-text files for encryption" <<
 	std::endl << "or an encrypted file for decryption." <<
 	std::endl;
@@ -153,16 +153,26 @@ void runtime::start()
 	while(mainloop_state)
 	{
 
-		if(!cypher_present_state)
+		if(!cipher_present_state)
 		{
-			cypher_file_name = file_question("cypher");
-			cypher_present_state = true;	
+			
+			cipher_file_name = file_question("cipher");
+			cipher_present_state = true;	
 		}
-		else if(file_reprompt("cypher"))
+		else if(file_reprompt("cipher"))
 		{
-			cypher_file_name = file_question("cypher");		
+			cipher_file_name = file_question("cipher");		
 		}
-/*
+
+		parser cipher_file(cipher_file_name);
+		std::vector<std::pair<char, std::string>> cyphers 
+			= cipher_file.parse_cipher();
+		hashmap cipher_map(cyphers);
+		//tree cipher_tree(cyphers);
+		
+		//cipher_map.print();		
+		
+
 		if(!data_present_state)
 		{
 			data_file_name = file_question("data");
@@ -172,20 +182,21 @@ void runtime::start()
 		{
 			data_file_name = file_question("data");
 		}
-*/
-		parser cypher_file(cypher_file_name);
-		std::vector<std::pair<char, std::string>> cypher_pairs = cypher_file.parse_cypher();
 		
-		for(auto element : cypher_pairs)
+		if(parser::is_this_file_encrypted(data_file_name))
 		{
-			std::cout << element.first << 
-			" - " <<  element.second << std::endl;
+			
+			parser data_file(data_file_name);
+			std::vector<std::string> codas = data_file.parse_encryption();
+		}
+		else
+		{
+		
+			parser data_file(data_file_name);
+			std::vector<std::string> words = data_file.parse_plaintext();
+		}
 
-		}	
-	       	
-		hashmap map(cypher_pairs);
-		map.print();	
-
+		
 		restart_prompt();
 		mainloop_state = boolean_question();
 	}

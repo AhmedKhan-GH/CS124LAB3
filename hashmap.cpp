@@ -103,9 +103,6 @@ void hashmap::resize_if_necessary()
 	}
 	if(need_to_resize)
 	{
-
-	std::cout << "Map has doubled in size to " << new_array_size;
-
 	//dynamically allocate new hash table
 		new_table = new hash_node*[new_array_size];
 		for(int i = 0; i < new_array_size; i++)

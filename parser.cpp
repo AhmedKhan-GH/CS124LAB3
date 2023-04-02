@@ -8,10 +8,9 @@ bool parser::does_this_file_exist(std::string file_name)
 
 parser::parser(std::string file_name) : file_name(file_name)
 {
-
 }
 
-std::vector<std::pair<char, std::string>> parser::parse_cypher()
+std::vector<std::pair<char, std::string>> parser::parse_cipher()
 {
 	std::vector<std::pair<char, std::string>> elements;
 	std::ifstream input_filestream(file_name);
@@ -30,17 +29,56 @@ std::vector<std::pair<char, std::string>> parser::parse_cypher()
 		linesplitter >> second;
 		elements.push_back(std::make_pair(first, second));
 	}
-	
+	return elements;	
 }
 
 std::vector<std::string> parser::parse_encryption()
 {
-
+	std::vector<std::string> elements;
+	std::ifstream input_filestream(file_name);
+	char current;
+	char previous;
+	std::string coda;
+	while(input_filestream.get(current))
+	{
+		if(current == '0' || current == '1')
+		{
+			coda += current;
+			previous = current;
+		}
+		else
+		{
+			if(!coda.empty())
+			{
+				elements.push_back(coda);
+				coda.clear();
+			}
+			if(current == ' ' && previous == ' ')
+			{
+				elements.push_back(" ");
+			}
+			previous = current;
+		}
+	}
+	if(!coda.empty())
+	{
+		elements.push_back(coda);
+		std::cout << coda << std::endl;
+	}
+	return elements;
 }
 
 std::vector<std::string> parser::parse_plaintext()
 {
 
+	std::vector<std::string> elements;
+	std::ifstream input_filestream(file_name);
+	std::string word;
+	while(input_filestream >> word)
+	{
+		elements.push_back(word);
+	}
+	return elements;
 }
 
 bool parser::is_this_file_encrypted(std::string file_name)

@@ -32,7 +32,7 @@ private:
 	struct hash_node
 	{
 		std::pair<char, std::string> data;
-		//pair of char, and cypher string key-value pairs
+		//pair of char, and cipher string key-value pairs
 		hash_node* next = nullptr;
 		//hash node is a linked list element
 	};

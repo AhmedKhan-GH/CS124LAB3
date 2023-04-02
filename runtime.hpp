@@ -21,10 +21,10 @@ private:
 	//domain state booleans
 	bool mainloop_state;
 	bool data_present_state;
-	bool cypher_present_state;
+	bool cipher_present_state;
 
 	//file names
-	std::string cypher_file_name;
+	std::string cipher_file_name;
 	std::string data_file_name;
 };
 
