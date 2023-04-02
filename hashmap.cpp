@@ -74,6 +74,23 @@ void hashmap::print() const {
 }
 
 
+<<<<<<< HEAD
+=======
+int hashmap::hasher(const std::string input) const
+{
+	int hash = 0;
+   int weight = 1;
+
+    for (int i = input.length() - 1; i >= 0; i--) {
+        if (input[i] == '1') {
+            hash += weight;
+        }
+        weight *= 2;
+    }
+    return hash;
+}
+
+>>>>>>> 3ec682352f3596143584893ff6c06f5406340942
 
 //resize_if_necessary determines of the hash_node* array has exceeded
 //a predefined load factor, and if so, transfers the map elements to
