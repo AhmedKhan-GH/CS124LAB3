@@ -45,21 +45,6 @@ hashmap::hashmap(std::vector<std::pair<char, std::string>> data) : hashmap()
 
 }
 
-int hashmap::hasher(const std::string input) const
-{
-    int hash = 0;
-    int weight = 1;
-
-    for (char c : input) {
-        if (c == '1') 
-	{
-		hash += weight;
-        } 
-        
-        weight *= 2;
-    }
-    return hash;
-}
 
 void hashmap::print() const {
     std::cout << std::endl;
