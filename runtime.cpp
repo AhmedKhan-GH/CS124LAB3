@@ -225,19 +225,28 @@ void runtime::start()
 		{
 			if(encrypted_state)
 			{
+				//cryptor decryptor(tokens, map);
+				//decryptor.decrypt();
+				//decryptor.append_to_file(data_file_name);
+
+
 				//or take map and tokens to decode, as each char simply need be pushed
 				//to a string based on their codas and spaces
 				//and save to respective files
 			}
 			else
 			{			
+				//cryptor encryptor(tokens, map, tree);
+				//encryptor.encrypt();
+				//encryptor.append_to_file(data_file_name);
+				//encryptor.update_cipher(cipher_file_name);
+				
 				//given vector of plaintext words or encrypted char codas
 				//establish cryptor function to take either map and tree and tokens
 				//to encode since insertion of foreign chars need an update of both
 				//map and tree (and an update of cipher file)
 			}
 
-			//append updated token vector to data file
 			
 			file_save_state = false; //reset for subsequent loops			
 		}
