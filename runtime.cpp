@@ -110,31 +110,29 @@ bool runtime::file_reprompt(std::string type)
 	return boolean_question();
 }
 
-void runtime::start_message()
+
+bool runtime::proceed_question()
 {
+
 	std::cout <<
 	std::endl << "Greeting user, welcome to the Enigma Machine." <<
 	std::endl << "This program allows you to provide a cipher" <<
 	std::endl << "and provide plain-text files for encryption" <<
 	std::endl << "or an encrypted file for decryption." <<
-	std::endl;
-}
-
-void runtime::proceed_prompt()
-{
-
-	std::cout <<
+	std::endl <<	
 	std::endl << "Would you like to proceed[y] or exit[n]." <<
 	std::endl;
+	return boolean_question();
 }
 
-void runtime::restart_prompt()
+void runtime::restart_question()
 {
 	std::cout <<
 	std::endl << "You have reached the end of the program." <<
 	std::endl << 
-	std::endl << "Would you like to restart[y] or exit[n]" <<
+	std::endl << "Would you like to restart[y] or exit[n]." <<
 	std::endl;
+	return boolean_question();
 }
 
 void runtime::end_message()
@@ -144,12 +142,31 @@ void runtime::end_message()
 	std::endl;
 }
 
+void runtime::encrypted_message()
+{
+	std::cout << 
+	std::endl << "You have provided an encrypted file." <<
+	std::endl <<
+	std::endl << "Would you like to save the plaintext" <<
+	std::endl << "version of the text to the file?" <<
+	std::endl;
+	return boolean_question();
+}
+
+void runtime::plaintext_message()
+{
+	std::cout <<
+	std::endl << "You have provided a plaintext file." <<
+	std::endl <<
+	std::endl << "Would you like to save the encrypted" <<
+	std::endl << "version of the text to the file?" <<
+	std::endl;
+	return boolean_question();
+}
+
 void runtime::start()
 {
-	start_message();
-	proceed_prompt();
-	mainloop_state = boolean_question();	
-	
+	mainloop_state = proceed_question();	
 	while(mainloop_state)
 	{
 
@@ -165,17 +182,19 @@ void runtime::start()
 		}
 
 		parser cipher_file(cipher_file_name);
+		
 		std::vector<std::pair<char, std::string>> cyphers 
 			= cipher_file.parse_cipher();
+		
 		hashmap cipher_map(cyphers);
-		//tree cipher_tree(cyphers);
 		
-		//cipher_map.print();		
+		//tree cipher_tree(cyphers); allocation of existing cipher pairs
+		//tracking largest cipher awaiting allocation of foreign chars
 		
-
 		if(!data_present_state)
 		{
 			data_file_name = file_question("data");
+			
 			data_present_state = true;	
 		}
 		else if(file_reprompt("data"))
@@ -185,20 +204,37 @@ void runtime::start()
 		
 		if(parser::is_this_file_encrypted(data_file_name))
 		{
-			
 			parser data_file(data_file_name);
-			std::vector<std::string> codas = data_file.parse_encryption();
+
+			tokens = data_file.parse_encryption();
+				
+			file_save_state = encryption_question();
 		}
 		else
 		{
-		
 			parser data_file(data_file_name);
-			std::vector<std::string> words = data_file.parse_plaintext();
+			
+			tokens = data_file.parse_plaintext();
+					
+			file_save_state = plaintext_message();
 		}
 
+		//given vector of plaintext words or encrypted char codas
+		//establish cryptor function to take either map and tree and tokens
+		//to encode since insertion of foreign chars need an update of both
+		//map and tree (and an update of cipher file)
 		
-		restart_prompt();
-		mainloop_state = boolean_question();
+		//or take map and tokens to decode, as each char simply need be pushed
+		//to a string based on their codas and spaces
+		//and save to respective files
+
+		if(file_save_state)
+		{
+			//append updated token vector to data file
+			file_save_state = false; //reset for subsequent loops			
+		}
+
+		mainloop_state = restart_question();
 	}
 	end_message();
 }

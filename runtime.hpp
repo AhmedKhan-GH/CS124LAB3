@@ -9,10 +9,12 @@ public:
 	std::string string_input();
 	std::string file_input();
 	bool boolean_question();
+	bool encryption_question();
+	bool plaintext_question();
 	void start_message();
 	void end_message();
-	void proceed_prompt();
-	void restart_prompt();
+	bool proceed_question();
+	bool restart_question();
 	runtime();
 	std::string file_question(std::string type);
 	bool file_reprompt(std::string type);
@@ -22,7 +24,9 @@ private:
 	bool mainloop_state;
 	bool data_present_state;
 	bool cipher_present_state;
-
+	bool file_save_state;
+	
+	std::vector<std::string> tokens;
 	//file names
 	std::string cipher_file_name;
 	std::string data_file_name;
