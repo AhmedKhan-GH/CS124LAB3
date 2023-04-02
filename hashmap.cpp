@@ -1,5 +1,6 @@
 #include "hashmap.hpp"
 #include <utility>
+#include <string>
 #include <stdexcept>
 #include <iostream>
 #include <functional>
