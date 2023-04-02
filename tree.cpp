@@ -4,6 +4,17 @@
 #include <utility>
 #include <vector>
 
+void Node::add_node(Node* new_node) {
+    if (new_node < data) {
+        if (left == nullptr) { left = new_node; }
+        else { left->add_node(new_node); }
+    }
+    else {
+        if (right == nullptr) { right = new_node; }
+        else { right->add_node(new_node); }
+    }
+}
+
 void Node::set_left_child(Node* child)
 {
    left = child;
