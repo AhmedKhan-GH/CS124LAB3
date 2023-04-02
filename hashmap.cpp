@@ -17,22 +17,29 @@ hashmap::~hashmap() {
 }
 
 
-hashmap::hashmap() : 
+hashmap::hashmap() :
 	current_array_size(4), //initial array size, array size track
 	minimum_array_size(4), //const, array size lower bound
-	
+
 	current_num_elements(0), //element count tracker
-	
+
 	multiplier(31), //const, prime multiplier for hashing function
 	nullchar('\0'), //const, null char for find();
-	load_factor(0.7) //const, load factor 
+	load_factor(0.7) //const, load factor
 {
-	table = new hash_node*[current_array_size]; 
+	table = new hash_node*[current_array_size];
 	//dynamically allocate array of hash node pointers
 	for(int i = 0; i < current_array_size; i++)
 	{
 		table[i] = nullptr;
 	}
+}
+
+hashmap::hashmap(std::vector<std::pair<char, std::string>> data) {
+    hashmap();
+    for (auto entry : data) {
+        insert(entry);
+    }
 }
 
 
@@ -50,7 +57,7 @@ void hashmap::print() const {
 }
 
 
-int hashmap::hasher(const std::string input) const 
+int hashmap::hasher(const std::string input) const
 {
 	int hash = 0;
    int weight = 1;
@@ -81,7 +88,7 @@ void hashmap::resize_if_necessary()
 		//set new_array size
 		need_to_resize = true;
 		new_array_size = this->current_array_size * 2;
-		
+
 	}
 	else if ((this->current_num_elements / this->current_array_size) < (this->load_factor / 2) && (this->current_array_size > this->minimum_array_size))
 	{
@@ -94,9 +101,9 @@ void hashmap::resize_if_necessary()
 	}
 	if(need_to_resize)
 	{
-	
-	std::cout << "Map has doubled in size to " << new_array_size;		
-	
+
+	std::cout << "Map has doubled in size to " << new_array_size;
+
 	//dynamically allocate new hash table
 		new_table = new hash_node*[new_array_size];
 		for(int i = 0; i < new_array_size; i++)
@@ -105,23 +112,23 @@ void hashmap::resize_if_necessary()
 		}
 
 
-		for (int i = 0; i < current_array_size; i++) 
+		for (int i = 0; i < current_array_size; i++)
 		{
 		    	//set a temp node to current bucket head
 			hash_node* node = table[i];
-			
+
 			//enter bucket if not empty
-		   	while (node != nullptr) 
+		   	while (node != nullptr)
 			{
-			
+
 				//save next node of current head
 				hash_node* next = node->next;
 
 				// Compute the new index
-				int new_index = 
+				int new_index =
 			hasher(node->data.second) % new_array_size;
 
-					
+
 			    // Insert the element into new bucket
 			    // by pushing current element at index
 			    // down the linked list
@@ -140,7 +147,7 @@ void hashmap::resize_if_necessary()
 				node = next;
 			}
 		}
-		
+
 
 		// Deallocate the old array of hash node pointers
 		delete[] table;
@@ -150,8 +157,8 @@ void hashmap::resize_if_necessary()
 
 		//change table size
 		this->current_array_size = new_array_size;
-		
-	}	
+
+	}
 }
 
 int hashmap::bucket_count() const
@@ -182,7 +189,7 @@ void hashmap::insert(std::pair<char, std::string> data)
 
 	hash_node* new_node = new hash_node;
     	new_node->data = data;
-	
+
 	if(table[new_index] == nullptr)
 	{
 		table[new_index] = new_node;
@@ -202,11 +209,11 @@ void hashmap::insert(std::pair<char, std::string> data)
 char hashmap::find(std::string cipher) const {
     int index = hasher(cipher) % current_array_size;
     hash_node* current = table[index];
-    while (current != nullptr) 
+    while (current != nullptr)
     {
-        if (current->data.second == cipher) 
-        { 
-            return current->data.first; 
+        if (current->data.second == cipher)
+        {
+            return current->data.first;
         }
 	else
 	{

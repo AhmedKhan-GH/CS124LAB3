@@ -2,6 +2,7 @@
 #define HASHMAP_HPP
 #include <utility>
 #include <string>
+#include <vector>
 
 
 class hashmap
@@ -9,8 +10,10 @@ class hashmap
 public:
 
 	~hashmap();
-    hashmap();
-    //constructor to set consts
+    hashmap(); //constructor to set consts
+	hashmap(std::vector<std::pair<char, std::string>> data);
+	// constructor that takes in a vector of entries
+
 
     void insert(std::pair<char, std::string> data);
     // adds a new element to the hash map
