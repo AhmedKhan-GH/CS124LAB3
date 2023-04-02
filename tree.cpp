@@ -3,6 +3,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <iostream>
 
 void Node::add_node(Node* new_node) {
     if (new_node < data) {
@@ -25,6 +26,16 @@ void Node::set_right_child(Node* child)
 {
    right = child;
    if (child != nullptr) { child->parent = this; }
+}
+
+void Node::print(int depth) {
+    std::string spaces = "";
+    for (int i = 0; i < depth; i++) { spaces += ' '; }
+
+    std::cout << spaces << "(" << data.first << " - " << data.second << ") ";
+
+    if (left != nullptr) { left->print(depth + 1); }
+    if (right != nullptr) { right->print(depth + 1); }
 }
 
 Tree::Tree() {
@@ -314,4 +325,8 @@ void RedBlackTree::fix_negative_red(Node* neg_red)
    {
       fix_double_red(child->right);
    }
+}
+
+void Tree::print() {
+    root->print(0);
 }

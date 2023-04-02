@@ -24,6 +24,7 @@ public:
    void set_left_child(Node* child);
    void set_right_child(Node* child);
    std::pair<char, std::string> data;
+   void print(int depth);
    Node* left;
    Node* right;
    Node* parent;
@@ -39,6 +40,7 @@ public:
     ~Tree();
     void insert(std::pair<char, std::string> data);
     void erase(std::pair<char, std::string> data);
+    void print();
 private:
     Node* root;
 
