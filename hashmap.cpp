@@ -35,7 +35,7 @@ hashmap::hashmap() :
 	}
 }
 
-hashmap::hashmap(std::vector<std::pair<char, std::string>> data) : hashmap();
+hashmap::hashmap(std::vector<std::pair<char, std::string>> data) : hashmap()
 {
     for (auto iter = data.begin(); iter != data.end(); iter++) {
         insert(*iter);
