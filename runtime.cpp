@@ -125,7 +125,7 @@ bool runtime::proceed_question()
 	return boolean_question();
 }
 
-void runtime::restart_question()
+bool runtime::restart_question()
 {
 	std::cout <<
 	std::endl << "You have reached the end of the program." <<
@@ -142,24 +142,24 @@ void runtime::end_message()
 	std::endl;
 }
 
-void runtime::encrypted_message()
+bool runtime::encrypted_question()
 {
 	std::cout << 
 	std::endl << "You have provided an encrypted file." <<
 	std::endl <<
-	std::endl << "Would you like to save the plaintext" <<
-	std::endl << "version of the text to the file?" <<
+	std::endl << "Would you like to save the decrypted version" <<
+	std::endl << "of the text to the file?" <<
 	std::endl;
 	return boolean_question();
 }
 
-void runtime::plaintext_message()
+bool runtime::plaintext_question()
 {
 	std::cout <<
-	std::endl << "You have provided a plaintext file." <<
+	std::endl << "You have provided an unencrypted file." <<
 	std::endl <<
-	std::endl << "Would you like to save the encrypted" <<
-	std::endl << "version of the text to the file?" <<
+	std::endl << "Would you like to save the encrypted version" <<
+	std::endl << "of the text to the file?" <<
 	std::endl;
 	return boolean_question();
 }
@@ -202,13 +202,15 @@ void runtime::start()
 			data_file_name = file_question("data");
 		}
 		
-		if(parser::is_this_file_encrypted(data_file_name))
+		encrypted_state = parser::is_this_file_encrypted(data_file_name);
+
+		if(encrypted_state)
 		{
 			parser data_file(data_file_name);
 
 			tokens = data_file.parse_encryption();
 				
-			file_save_state = encryption_question();
+			file_save_state = encrypted_question();	
 		}
 		else
 		{
@@ -216,21 +218,27 @@ void runtime::start()
 			
 			tokens = data_file.parse_plaintext();
 					
-			file_save_state = plaintext_message();
+			file_save_state = plaintext_question();
 		}
-
-		//given vector of plaintext words or encrypted char codas
-		//establish cryptor function to take either map and tree and tokens
-		//to encode since insertion of foreign chars need an update of both
-		//map and tree (and an update of cipher file)
 		
-		//or take map and tokens to decode, as each char simply need be pushed
-		//to a string based on their codas and spaces
-		//and save to respective files
-
 		if(file_save_state)
 		{
+			if(encrypted_state)
+			{
+				//or take map and tokens to decode, as each char simply need be pushed
+				//to a string based on their codas and spaces
+				//and save to respective files
+			}
+			else
+			{			
+				//given vector of plaintext words or encrypted char codas
+				//establish cryptor function to take either map and tree and tokens
+				//to encode since insertion of foreign chars need an update of both
+				//map and tree (and an update of cipher file)
+			}
+
 			//append updated token vector to data file
+			
 			file_save_state = false; //reset for subsequent loops			
 		}
 
