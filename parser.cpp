@@ -28,7 +28,7 @@ std::vector<std::pair<char, std::string>> parser::parse_cypher()
 		linesplitter << line; 
 		linesplitter >> first;
 		linesplitter >> second;
-		elements.push_back(std::make_pair(first, second);
+		elements.push_back(std::make_pair(first, second));
 	}
 	
 }
