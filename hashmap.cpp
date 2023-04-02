@@ -42,6 +42,7 @@ hashmap::hashmap(std::vector<std::pair<char, std::string>> data) : hashmap()
     {
         this->insert(element);
     }
+
 }
 
 int hashmap::hasher(const std::string input) const
@@ -74,8 +75,6 @@ void hashmap::print() const {
 }
 
 
-<<<<<<< HEAD
-=======
 int hashmap::hasher(const std::string input) const
 {
 	int hash = 0;
@@ -89,8 +88,6 @@ int hashmap::hasher(const std::string input) const
     }
     return hash;
 }
-
->>>>>>> 3ec682352f3596143584893ff6c06f5406340942
 
 //resize_if_necessary determines of the hash_node* array has exceeded
 //a predefined load factor, and if so, transfers the map elements to
