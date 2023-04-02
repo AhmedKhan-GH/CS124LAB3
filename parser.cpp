@@ -28,5 +28,15 @@ std::vector<<std::string> parser::parse_plaintext()
 
 bool parser::is_this_file_encrypted(std::string file_name)
 {
-
+	std::ifstream input_filstream(file_name); //open given file
+	std::string file_contents //read contents of file into string
+	(
+		(std::istreambuf_iterator<char>(file)),
+		std::istreambuf_iterator<char>()
+	);
+	return file_contents.find_first_not_of("01 \n")
+		== std::string::npos; //return true if find_first
+				      //not-of iterator reaches
+				      //end of file	
 }
+
