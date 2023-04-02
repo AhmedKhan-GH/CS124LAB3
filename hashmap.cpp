@@ -62,8 +62,8 @@ int hashmap::hasher(const std::string input) const
 	int hash = 0;
    int weight = 1;
 
-    for (char c : input) {
-        if (c == '1') {
+    for (int i = input.length() - 1; i >= 0; i--) {
+        if (input[i] == '1') {
             hash += weight;
         }
         weight *= 2;
