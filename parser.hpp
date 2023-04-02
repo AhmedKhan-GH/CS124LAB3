@@ -3,6 +3,8 @@
 #include <fstream>
 #include <vector>
 #include <utility>
+#include <sstream>
+#include <iostream>
 class parser
 {
 public:
