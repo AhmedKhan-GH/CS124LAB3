@@ -178,7 +178,7 @@ void runtime::start()
 		std::vector<std::pair<char, std::string>> cypher_pairs = cypher_file.parse_cypher();
 
 		hashmap map(cypher_pairs);
-	       	map.print;	
+	       	map.print();	
 
 		restart_prompt();
 		mainloop_state = boolean_question();
