@@ -163,7 +163,7 @@ void runtime::start()
 		{
 			cypher_file_name = file_question("cypher");		
 		}
-
+/*
 		if(!data_present_state)
 		{
 			data_file_name = file_question("data");
@@ -173,9 +173,11 @@ void runtime::start()
 		{
 			data_file_name = file_question("data");
 		}
+*/
+		parser cypher_file(cypher_file_name);
+		std::vector<std::pair<char, std::string>> cypher_pairs = cypher_file.parse_cypher();
 
-		
-		
+
 		restart_prompt();
 		mainloop_state = boolean_question();
 	}

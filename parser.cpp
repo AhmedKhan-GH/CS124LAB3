@@ -13,7 +13,24 @@ parser::parser(std::string file_name) : file_name(file_name)
 
 std::vector<std::pair<char, std::string>> parser::parse_cypher()
 {
+	std::vector<std::pair<char, std::string>> elements;
+	std::ifstream input_filestream(file_name);
+	std::stringstream linesplitter;
+	std::string line;
+	char first;
+	std::string second;
+	while(std::getline(input_filestream, line))
+	{
+		linesplitter.clear();
+		first = '\0';
+		second.clear();
 
+		linesplitter << line; 
+		linesplitter >> first;
+		linesplitter >> second;
+		elements.push_back(std::make_pair(first, second);
+	}
+	
 }
 
 std::vector<std::string> parser::parse_encryption()
