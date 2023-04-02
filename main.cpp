@@ -2,6 +2,6 @@
 
 int main()
 {
-	Runtime program;
+	runtime program;
 	program.start();
 }
