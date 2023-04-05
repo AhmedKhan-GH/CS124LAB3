@@ -5,6 +5,17 @@
 #include <vector>
 #include <iostream>
 
+Node::Node() {
+    left = nullptr;
+    right = nullptr;
+    parent = nullptr;
+}
+
+Node::~Node() {
+    delete left;
+    delete right;
+}
+
 void Node::add_node(Node* new_node) {
     if (new_node < data) {
         if (left == nullptr) { left = new_node; }
@@ -50,7 +61,7 @@ Tree::Tree(std::vector<std::pair<char, std::string>> data) : Tree(); {
 }
 
 Tree::~Tree() {
-
+    delete root;
 }
 
 void RedBlackTree::insert(std::pair<char, std::string> element)

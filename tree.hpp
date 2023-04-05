@@ -18,9 +18,9 @@ class Node
 {
 public:
    Node();
+   ~Node();
 private:
    void add_node(Node* new_node);
-public:
    void set_left_child(Node* child);
    void set_right_child(Node* child);
    std::pair<char, std::string> data;
