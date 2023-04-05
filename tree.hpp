@@ -29,7 +29,7 @@ private:
    Node* right;
    Node* parent;
    int color;
-friend class RedBlackTree;
+friend class Tree;
 };
 
 class Tree

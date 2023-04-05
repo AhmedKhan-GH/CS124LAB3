@@ -17,7 +17,7 @@ Node::~Node() {
 }
 
 void Node::add_node(Node* new_node) {
-    if (new_node < data) {
+    if (new_node->data < data) {
         if (left == nullptr) { left = new_node; }
         else { left->add_node(new_node); }
     }
@@ -43,7 +43,7 @@ void Node::print(int depth) {
     std::string spaces = "";
     for (int i = 0; i < depth; i++) { spaces += ' '; }
 
-    std::cout << spaces << "(" << data.first << " - " << data.second << ") ";
+    std::cout << spaces << "(" << data.first << " - " << data.second << ") " << std::endl;
 
     if (left != nullptr) { left->print(depth + 1); }
     if (right != nullptr) { right->print(depth + 1); }
@@ -53,7 +53,7 @@ Tree::Tree() {
     root = nullptr;
 }
 
-Tree::Tree(std::vector<std::pair<char, std::string>> data) : Tree(); {
+Tree::Tree(std::vector<std::pair<char, std::string>> data) : Tree() {
     for (auto element : data)
     {
         this->insert(element);
@@ -64,7 +64,7 @@ Tree::~Tree() {
     delete root;
 }
 
-void RedBlackTree::insert(std::pair<char, std::string> element)
+void Tree::insert(std::pair<char, std::string> element)
 {
    Node* new_node = new Node;
    new_node->data = element;
@@ -75,7 +75,7 @@ void RedBlackTree::insert(std::pair<char, std::string> element)
    fix_after_add(new_node);
 }
 
-void RedBlackTree::replace_with(Node* to_be_replaced, Node* replacement)
+void Tree::replace_with(Node* to_be_replaced, Node* replacement)
 {
    if (to_be_replaced->parent == nullptr)
    {
@@ -92,7 +92,7 @@ void RedBlackTree::replace_with(Node* to_be_replaced, Node* replacement)
    }
 }
 
-void RedBlackTree::fix_after_add(Node* new_node)
+void Tree::fix_after_add(Node* new_node)
 {
    if (new_node->parent == nullptr)
    {
@@ -105,7 +105,7 @@ void RedBlackTree::fix_after_add(Node* new_node)
    }
 }
 
-void RedBlackTree::fix_double_red(Node* child)
+void Tree::fix_double_red(Node* child)
 {
    Node* parent = child->parent;
    Node* grandparent = parent->parent;
@@ -167,7 +167,7 @@ void RedBlackTree::fix_double_red(Node* child)
    }
 }
 
-void RedBlackTree::erase(std::pair<char, std::string> element)
+void Tree::erase(std::pair<char, std::string> element)
 {
    // Find node to be removed
 
@@ -225,7 +225,7 @@ void RedBlackTree::erase(std::pair<char, std::string> element)
    replace_with(smallest, smallest->right);
 }
 
-void RedBlackTree::fix_before_remove(Node* to_be_removed)
+void Tree::fix_before_remove(Node* to_be_removed)
 {
    if (to_be_removed->color == RED) { return; }
 
@@ -239,7 +239,7 @@ void RedBlackTree::fix_before_remove(Node* to_be_removed)
    else {bubble_up(to_be_removed->parent); }
 }
 
-void RedBlackTree::bubble_up(Node* parent)
+void Tree::bubble_up(Node* parent)
 {
    if (parent == nullptr) { return; }
    parent->color++;
@@ -256,7 +256,7 @@ void RedBlackTree::bubble_up(Node* parent)
    }
 }
 
-bool RedBlackTree::bubble_up_fix(Node* child)
+bool Tree::bubble_up_fix(Node* child)
 {
    if (child->color == NEGATIVE_RED)
    {
@@ -277,7 +277,7 @@ bool RedBlackTree::bubble_up_fix(Node* child)
    return false;
 }
 
-void RedBlackTree::fix_negative_red(Node* neg_red)
+void Tree::fix_negative_red(Node* neg_red)
 {
    Node* parent = neg_red->parent;
    Node* child;
