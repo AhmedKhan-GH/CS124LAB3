@@ -185,18 +185,15 @@ void runtime::start()
 
 		std::vector<std::pair<char, std::string>> ciphers
 			= cipher_file.parse_cipher();
-<<<<<<< HEAD
 		
 		hashmap cipher_map(cyphers);
-		cipher_map.print();
+		//cipher_map.print();
 		
 		//tree cipher_tree(cyphers); allocation of existing cipher pairs
-=======
 
 		hashmap cipher_map(ciphers);
 
 		//tree cipher_tree(ciphers); allocation of existing cipher pairs
->>>>>>> 04bf9a933bc1873acf1b33d563898338d9790b04
 		//tracking largest cipher awaiting allocation of foreign chars
 
 		if(!data_present_state)
