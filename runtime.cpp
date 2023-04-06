@@ -1,7 +1,7 @@
 #include "runtime.hpp"
 
 
-runtime::runtime() : 
+runtime::runtime() :
 	mainloop_state(false),
 	cipher_present_state(false),
 	data_present_state(false){}
@@ -11,7 +11,7 @@ std::string runtime::file_input()
 	std::cout << "ENTER: ";
 	std::string file_name;
 	bool verified = false;
-	do 
+	do
 	{
 		file_name = string_input();
 		if(parser::does_this_file_exist(file_name))
@@ -51,42 +51,42 @@ std::string runtime::string_input()
 }
 
 //COMPLETE
-//this function uses string_input to return a bool based 
+//this function uses string_input to return a bool based
 //on user input
 bool runtime::boolean_question()
 {
-	bool verified = false; //determines if question 
+	bool verified = false; //determines if question
 			       //loops based on invalid answer
 	bool answer; //value of the answer input by the user
-	
-	std::string input; //single variable needed to store 
-			   //input even over repeated iterations 
+
+	std::string input; //single variable needed to store
+			   //input even over repeated iterations
 			   //of prompt
-	std::cout << "[y/n]: "; //prompt for user for valid characters, 
-	
+	std::cout << "[y/n]: "; //prompt for user for valid characters,
+
 	do{
-		input = string_input(); //getting string from 
+		input = string_input(); //getting string from
 					//validated input function
 		if(input == "y") //checking for yes and setting bools
 		{
 			verified = true;
 			answer = true;
 		}
-		else if(input == "n") //checking for no and 
+		else if(input == "n") //checking for no and
 				      //setting bools
 		{
 			verified = true;
 			answer = false;
 		}
-		else //informing and reprompting user 
+		else //informing and reprompting user
 		     //in case of invalid input
 		{
 			std::cout << std::endl << "invalid, try again: ";
 			verified = false;
 		}
-	}while(!verified); //prompt loop until a desired answer 
+	}while(!verified); //prompt loop until a desired answer
 			   //has been given
-	
+
 	return answer;
 }
 
@@ -95,7 +95,7 @@ bool runtime::boolean_question()
 std::string runtime::file_question(std::string type)
 {
 	std::cout <<
-	std::endl << "Please provide a '" << type << "' file with the .txt" << 
+	std::endl << "Please provide a '" << type << "' file with the .txt" <<
 	std::endl << "extension, and ensure its the appropriate format." <<
 	std::endl;
 	return file_input();
@@ -104,7 +104,7 @@ std::string runtime::file_question(std::string type)
 bool runtime::file_reprompt(std::string type)
 {
 	std::cout <<
-	std::endl << "Would you like to select a different[y] '" << type << "'" << 
+	std::endl << "Would you like to select a different[y] '" << type << "'" <<
 	std::endl << "file or continue using the current[n] one?" <<
 	std::endl;
 	return boolean_question();
@@ -119,7 +119,7 @@ bool runtime::proceed_question()
 	std::endl << "This program allows you to provide a cipher" <<
 	std::endl << "and provide plain-text files for encryption" <<
 	std::endl << "or an encrypted file for decryption." <<
-	std::endl <<	
+	std::endl <<
 	std::endl << "Would you like to proceed[y] or exit[n]." <<
 	std::endl;
 	return boolean_question();
@@ -129,7 +129,7 @@ bool runtime::restart_question()
 {
 	std::cout <<
 	std::endl << "You have reached the end of the program." <<
-	std::endl << 
+	std::endl <<
 	std::endl << "Would you like to restart[y] or exit[n]." <<
 	std::endl;
 	return boolean_question();
@@ -137,14 +137,14 @@ bool runtime::restart_question()
 
 void runtime::end_message()
 {
-	std::cout << 
+	std::cout <<
 	std::endl << "Thank you for using the Enigma Machine!" <<
 	std::endl;
 }
 
 bool runtime::encrypted_question()
 {
-	std::cout << 
+	std::cout <<
 	std::endl << "You have provided an encrypted file." <<
 	std::endl <<
 	std::endl << "Would you like to save the decrypted version" <<
@@ -166,43 +166,50 @@ bool runtime::plaintext_question()
 
 void runtime::start()
 {
-	mainloop_state = proceed_question();	
+	mainloop_state = proceed_question();
 	while(mainloop_state)
 	{
 
 		if(!cipher_present_state)
 		{
-			
+
 			cipher_file_name = file_question("cipher");
-			cipher_present_state = true;	
+			cipher_present_state = true;
 		}
 		else if(file_reprompt("cipher"))
 		{
-			cipher_file_name = file_question("cipher");		
+			cipher_file_name = file_question("cipher");
 		}
 
 		parser cipher_file(cipher_file_name);
-		
-		std::vector<std::pair<char, std::string>> cyphers 
+
+		std::vector<std::pair<char, std::string>> ciphers
 			= cipher_file.parse_cipher();
+<<<<<<< HEAD
 		
 		hashmap cipher_map(cyphers);
 		cipher_map.print();
 		
 		//tree cipher_tree(cyphers); allocation of existing cipher pairs
+=======
+
+		hashmap cipher_map(ciphers);
+
+		//tree cipher_tree(ciphers); allocation of existing cipher pairs
+>>>>>>> 04bf9a933bc1873acf1b33d563898338d9790b04
 		//tracking largest cipher awaiting allocation of foreign chars
-		
+
 		if(!data_present_state)
 		{
 			data_file_name = file_question("data");
-			
-			data_present_state = true;	
+
+			data_present_state = true;
 		}
 		else if(file_reprompt("data"))
 		{
 			data_file_name = file_question("data");
 		}
-		
+
 		encrypted_state = parser::is_this_file_encrypted(data_file_name);
 
 		if(encrypted_state)
@@ -210,18 +217,18 @@ void runtime::start()
 			parser data_file(data_file_name);
 
 			tokens = data_file.parse_encryption();
-				
-			file_save_state = encrypted_question();	
+
+			file_save_state = encrypted_question();
 		}
 		else
 		{
 			parser data_file(data_file_name);
-			
+
 			tokens = data_file.parse_plaintext();
-					
+
 			file_save_state = plaintext_question();
 		}
-		
+
 		if(file_save_state)
 		{
 			if(encrypted_state)
@@ -236,24 +243,23 @@ void runtime::start()
 				//and save to respective files
 			}
 			else
-			{			
+			{
 				//cryptor encryptor(tokens, map, tree);
 				//encryptor.encrypt();
 				//encryptor.append_to_file(data_file_name);
 				//encryptor.update_cipher(cipher_file_name);
-				
+
 				//given vector of plaintext words or encrypted char codas
 				//establish cryptor function to take either map and tree and tokens
 				//to encode since insertion of foreign chars need an update of both
 				//map and tree (and an update of cipher file)
 			}
 
-			
-			file_save_state = false; //reset for subsequent loops			
+
+			file_save_state = false; //reset for subsequent loops
 		}
 
 		mainloop_state = restart_question();
 	}
 	end_message();
 }
-	

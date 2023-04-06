@@ -1,7 +1,7 @@
 #ifndef CRYPTOR_HPP
 #define CRYPTOR_HPP
-#include "hashmap"
-#include "tree"
+#include "hashmap.hpp"
+#include "tree.hpp"
 #include <vector>
 class cryptor
 {
