@@ -3,6 +3,8 @@
 #include <iostream>
 #include "parser.hpp"
 #include "hashmap.hpp"
+#include "tree.hpp"
+#include "cryptor.hpp"
 class runtime
 {
 public:

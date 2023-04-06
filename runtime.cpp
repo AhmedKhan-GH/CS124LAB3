@@ -4,7 +4,9 @@
 runtime::runtime() :
 	mainloop_state(false),
 	cipher_present_state(false),
-	data_present_state(false){}
+	data_present_state(false),
+	file_save_state(false),
+	encrypted_state(false){}
 
 std::string runtime::file_input()
 {
@@ -185,16 +187,12 @@ void runtime::start()
 
 		std::vector<std::pair<char, std::string>> ciphers
 			= cipher_file.parse_cipher();
-		
-		hashmap cipher_map(cyphers);
-		//cipher_map.print();
-		
-		//tree cipher_tree(cyphers); allocation of existing cipher pairs
 
 		hashmap cipher_map(ciphers);
-
-		//tree cipher_tree(ciphers); allocation of existing cipher pairs
-		//tracking largest cipher awaiting allocation of foreign chars
+		//cipher_map.print();
+		//Tree cipher_tree(ciphers); //allocation of existing cipher pairs
+		//cipher_tree.print();
+	
 
 		if(!data_present_state)
 		{
@@ -225,13 +223,11 @@ void runtime::start()
 
 			file_save_state = plaintext_question();
 		}
-
 		if(file_save_state)
 		{
 			if(encrypted_state)
 			{
-				//cryptor decryptor(tokens, map);
-				//decryptor.decrypt();
+				std::cout << cryptor::decrypt(tokens, cipher_map);
 				//decryptor.append_to_file(data_file_name);
 
 
