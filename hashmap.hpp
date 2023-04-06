@@ -11,7 +11,7 @@ public:
 
 	~hashmap();
     hashmap(); //constructor to set consts
-	hashmap(std::vector<std::pair<char, std::string>> data);
+	hashmap(std::vector<std::pair<char, std::string> > data);
 	// constructor that takes in a vector of entries
 
 

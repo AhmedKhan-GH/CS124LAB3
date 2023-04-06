@@ -53,7 +53,7 @@ Tree::Tree() {
     root = nullptr;
 }
 
-Tree::Tree(std::vector<std::pair<char, std::string>> data) : Tree() {
+Tree::Tree(std::vector<std::pair<char, std::string> > data) : Tree() {
     for (auto element : data)
     {
         this->insert(element);

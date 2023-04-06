@@ -10,9 +10,9 @@ parser::parser(std::string file_name) : file_name(file_name)
 {
 }
 
-std::vector<std::pair<char, std::string>> parser::parse_cipher()
+std::vector<std::pair<char, std::string> > parser::parse_cipher()
 {
-	std::vector<std::pair<char, std::string>> elements;
+	std::vector<std::pair<char, std::string> > elements;
 	std::ifstream input_filestream(file_name);
 	std::stringstream linesplitter;
 	std::string line;
@@ -24,12 +24,12 @@ std::vector<std::pair<char, std::string>> parser::parse_cipher()
 		first = '\0';
 		second.clear();
 
-		linesplitter << line; 
+		linesplitter << line;
 		linesplitter >> first;
 		linesplitter >> second;
 		elements.push_back(std::make_pair(first, second));
 	}
-	return elements;	
+	return elements;
 }
 
 std::vector<std::string> parser::parse_encryption()
@@ -92,6 +92,11 @@ bool parser::is_this_file_encrypted(std::string file_name)
 	return file_contents.find_first_not_of("01 \n")
 		== std::string::npos; //return true if find_first
 				      //not-of iterator reaches
-				      //end of file	
+				      //end of file
 }
 
+void parser::append_to_file(std::string text) {
+	std::ofstream output_filestream;
+	output_filestream.open(file_name, std::ios_base::app);
+	output_filestream << std::endl << std::endl << text;
+}

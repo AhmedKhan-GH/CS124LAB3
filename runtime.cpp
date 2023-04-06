@@ -185,14 +185,14 @@ void runtime::start()
 
 		parser cipher_file(cipher_file_name);
 
-		std::vector<std::pair<char, std::string>> ciphers
+		std::vector<std::pair<char, std::string> > ciphers
 			= cipher_file.parse_cipher();
 
 		hashmap cipher_map(ciphers);
 		//cipher_map.print();
 		//Tree cipher_tree(ciphers); //allocation of existing cipher pairs
-	
-		Tree cipher_tree(ciphers);	
+
+		Tree cipher_tree(ciphers);
 
 		if(!data_present_state)
 		{
@@ -204,36 +204,31 @@ void runtime::start()
 		{
 			data_file_name = file_question("data");
 		}
+		parser data_file(data_file_name);
 
 		encrypted_state = parser::is_this_file_encrypted(data_file_name);
 
 		if(encrypted_state)
 		{
-			parser data_file(data_file_name);
-
 			tokens = data_file.parse_encryption();
 
 			file_save_state = encrypted_question();
 		}
 		else
 		{
-			parser data_file(data_file_name);
-
 			tokens = data_file.parse_plaintext();
 
 			file_save_state = plaintext_question();
 		}
 		if(file_save_state)
 		{
-			if(encrypted_state)
-			{
-				std::cout << cryptor::decrypt(tokens, cipher_map);
-			}
-			else
-			{
-				std::cout << cryptor::encrypt(tokens, cipher_tree);
-			}
+			std::string text;
+			if(encrypted_state) { text = cryptor::decrypt(tokens, cipher_map); }
+			else { text = cryptor::encrypt(tokens, cipher_tree); }
 
+			// output results to cout and file
+			data_file.append_to_file(text);
+			std::cout << text;
 
 			file_save_state = false; //reset for subsequent loops
 		}

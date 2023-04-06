@@ -36,7 +36,7 @@ class Tree
 {
 public:
     Tree();
-    Tree(std::vector<std::pair<char, std::string>> data);
+    Tree(std::vector<std::pair<char, std::string> > data);
     ~Tree();
     void insert(std::pair<char, std::string> data);
     void erase(std::pair<char, std::string> data);
