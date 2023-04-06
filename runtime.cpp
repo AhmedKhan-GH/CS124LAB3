@@ -187,6 +187,7 @@ void runtime::start()
 			= cipher_file.parse_cipher();
 		
 		hashmap cipher_map(cyphers);
+		cipher_map.print();
 		
 		//tree cipher_tree(cyphers); allocation of existing cipher pairs
 		//tracking largest cipher awaiting allocation of foreign chars
