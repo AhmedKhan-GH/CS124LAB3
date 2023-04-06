@@ -40,6 +40,7 @@ public:
     ~Tree();
     void insert(std::pair<char, std::string> data);
     void erase(std::pair<char, std::string> data);
+    std::string find(char element) const;
     void print();
 private:
     Node* root;

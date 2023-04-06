@@ -18,11 +18,11 @@ Node::~Node() {
 
 void Node::add_node(Node* new_node) {
     if (new_node->data < data) {
-        if (left == nullptr) { left = new_node; }
+        if (left == nullptr) { left = new_node; left->parent = this; }
         else { left->add_node(new_node); }
     }
     else {
-        if (right == nullptr) { right = new_node; }
+        if (right == nullptr) { right = new_node; right->parent = this; }
         else { right->add_node(new_node); }
     }
 }
@@ -73,6 +73,19 @@ void Tree::insert(std::pair<char, std::string> element)
    if (root == nullptr) { root = new_node; }
    else { root->add_node(new_node); }
    fix_after_add(new_node);
+}
+
+std::string Tree::find(char element) const {
+    Node* current = root;
+    while (current != nullptr) {
+        char current_ele = current->data.first;
+        if (element == current_ele) { return current->data.second; }
+        else if (element < current_ele) { current = current->left; }
+        else { current = current->right; }
+    }
+
+    // element was not found
+    return "";
 }
 
 void Tree::replace_with(Node* to_be_replaced, Node* replacement)
