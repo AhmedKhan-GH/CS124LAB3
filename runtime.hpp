@@ -20,6 +20,7 @@ public:
 	runtime();
 	std::string file_question(std::string type);
 	bool file_reprompt(std::string type);
+	void justified_print(std::string input, int width);
 	void start();
 private:
 	//domain state booleans

@@ -6,7 +6,8 @@ runtime::runtime() :
 	cipher_present_state(false),
 	data_present_state(false),
 	file_save_state(false),
-	encrypted_state(false){}
+	encrypted_state(false)
+{}
 
 std::string runtime::file_input()
 {
@@ -166,6 +167,20 @@ bool runtime::plaintext_question()
 	return boolean_question();
 }
 
+void runtime::justified_print(std::string input, int width)
+{
+	std::cout << std::endl;
+	for(int i = 0; i < input.size(); i++)
+	{
+		std::cout << input[i];
+		if((i + 1) % width == 0)
+		{
+			std::cout << std::endl;
+		}
+	}
+	std::cout << std::endl;
+}
+
 void runtime::start()
 {
 	mainloop_state = proceed_question();
@@ -228,7 +243,7 @@ void runtime::start()
 
 			// output results to cout and file
 			data_file.append_to_file(text);
-			std::cout << text;
+			justified_print(text, 45);	
 
 			file_save_state = false; //reset for subsequent loops
 		}
