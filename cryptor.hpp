@@ -8,8 +8,10 @@ class cryptor
 {
 public:
 	//TAKE DATA STRUCTURES BY REFERENCE
-	static	std::string decrypt(std::vector<std::string>& tokens, hashmap& decipher); 
-//	cryptor(std::vector<std:;string>> tokens, Tree cipher); 
+	static	std::string decrypt(std::vector<std::string>& tokens, hashmap& decipher);
+	static std::string encrypt(std::vector<std::string>& tokens, Tree& cipher);
+//
+//cryptor(std::vector<std:;string>> tokens, Tree cipher); 
 	//void encrypt(cipher_file_name); //updates cipher as novel chars are disovered
 	//void append_to_file(std::string file_name)	
 private:
